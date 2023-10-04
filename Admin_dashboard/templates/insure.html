@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_name">Name:</label>
+            <input type="text" id="id_name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="id_image">Image:</label>
+            <input type="file" id="id_image" name="image" class="form-control-file" accept="image/*" required>
+        </div>
+        <div class="form-group">
+            <label for="id_description">Description:</label>
+            <textarea id="id_description" name="description" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="id_insurable_cars">Insurable Cars:</label>
+            <textarea id="id_insurable_cars" name="insurable_cars" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="id_non_insurable_cars">Non-Insurable Cars:</label>
+            <textarea id="id_non_insurable_cars" name="non_insurable_cars" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+
+    <h2>Insurance Company List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Insurable Cars</th>
+            <th>Non-Insurable Cars</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for company in companies %}
+        <tr>
+            <td>{{ company.name }}</td>
+            <td><img src="{{ company.image.url }}" alt="{{ company.name }}" width="100"></td>
+            <td>{{ company.description }}</td>
+            <td>{{ company.insurable_cars }}</td>
+            <td>{{ company.non_insurable_cars }}</td>
+            <td>
+                <a href="" class="btn btn-sm btn-primary">Update</a>
+                <form method="POST" action="" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
